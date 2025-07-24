@@ -4,10 +4,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 3.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7", ">= 7.0.7"
+gem "rails", "~> 7", ">= 7.1.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+gem "sprockets-rails", ">= 3.5.0"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
@@ -16,16 +16,16 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 6.3", ">= 6.3.1"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails", ">= 1.1.6"
+gem "importmap-rails", ">= 1.2.2"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", ">= 1.5.0"
+gem "turbo-rails", ">= 2.0.0"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails", ">= 1.3.0"
+gem "stimulus-rails", ">= 1.3.1"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+gem "jbuilder", ">= 2.12.0"
 
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 5.0"
@@ -48,12 +48,12 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem "cssbundling-rails", ">= 1.2.0"
-gem "bootstrap_form", ">= 5.3.0"
+gem "cssbundling-rails", ">= 1.4.0"
+gem "bootstrap_form", ">= 5.4.0"
 gem "sidekiq", ">= 7.0.8"
 gem "sidekiq-cron"
 gem "fugit"
-gem "rails-i18n", ">= 7.0.8"
+gem "rails-i18n", ">= 7.0.9"
 gem "parallel"
 
 group :development, :test do
@@ -74,7 +74,7 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
+  gem "capybara", ">= 3.40.0"
   gem "selenium-webdriver"
   gem "webdrivers"
 end
