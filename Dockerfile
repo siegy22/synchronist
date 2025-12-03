@@ -1,5 +1,5 @@
 FROM ruby:3.4.7-alpine AS rb
-RUN apk update && apk add --no-cache postgresql-dev build-base libffi-dev nodejs rsync tzdata yarn
+RUN apk update && apk add --no-cache postgresql-dev build-base libffi-dev nodejs rsync tzdata yarn yaml-dev
 COPY Gemfile* package.json yarn.lock ./
 RUN yarn install
 RUN gem update --system && gem install bundler
