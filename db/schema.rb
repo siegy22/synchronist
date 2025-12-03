@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_110457) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_03_085457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_110457) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "sent_files", "syncs"
-  add_foreign_key "syncs", "sender_payloads"
+  add_foreign_key "sent_files", "syncs", on_delete: :cascade
+  add_foreign_key "syncs", "sender_payloads", on_delete: :cascade
 end
