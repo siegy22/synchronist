@@ -23,7 +23,7 @@ jobs:
         ports: ['6379:6379']
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/cache@v1
+    - uses: actions/cache@v3
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -32,7 +32,7 @@ jobs:
     - name: Get yarn cache
       id: yarn-cache
       run: echo "::set-output name=dir::$(yarn cache dir)"
-    - uses: actions/cache@v1
+    - uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
