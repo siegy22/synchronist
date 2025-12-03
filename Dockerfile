@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-alpine3.18 AS rb
+FROM ruby:3.4.7-alpine AS rb
 RUN apk update && apk add --no-cache postgresql-dev build-base libffi-dev nodejs rsync tzdata yarn
 COPY Gemfile* package.json yarn.lock ./
 RUN yarn install
@@ -14,7 +14,7 @@ ADD . .
 RUN bundle exec rails assets:clobber && bundle exec rails assets:precompile
 
 
-FROM ruby:3.2.2-alpine3.18
+FROM ruby:3.4.7-alpine
 
 RUN apk update && apk add --no-cache postgresql-client rsync tzdata
 
