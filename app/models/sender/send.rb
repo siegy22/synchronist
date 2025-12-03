@@ -16,7 +16,7 @@ module Sender
           { path: file, size: File.size(file), sync_id: sync.id}
         end
 
-        SentFile.insert_all(sent_files)
+        SentFile.insert_all(sent_files) unless sent_files.empty?
         sync.increment(:progress, 100.0) if files.empty?
         sync.save
       end
