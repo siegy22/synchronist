@@ -1,6 +1,6 @@
 services:
   synchronist: &synchronist
-    image: siegy22/synchronist:1.0.0.beta
+    image: siegy22/synchronist:1.0.0.beta2
     depends_on:
       - redis
       - postgres
