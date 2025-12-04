@@ -51,7 +51,7 @@ gem "bootsnap", require: false
 gem "cssbundling-rails", ">= 1.2.0"
 gem "bootstrap_form", ">= 5.3.0"
 gem "sidekiq", ">= 7.0.8"
-gem "sidekiq-cron"
+gem "sidekiq-cron", ">= 2.0.0"
 gem "fugit"
 gem "rails-i18n", ">= 7.0.8"
 gem "parallel"
