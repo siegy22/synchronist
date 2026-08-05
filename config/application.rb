@@ -10,7 +10,7 @@ module Synchronist
   class Application < Rails::Application
     config.load_defaults 7.0
 
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :solid_queue
     config.action_mailer.deliver_later_queue_name = nil
     config.action_mailbox.queues.routing    = nil
     config.active_storage.queues.analysis   = nil

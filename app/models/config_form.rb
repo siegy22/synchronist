@@ -1,3 +1,5 @@
+require 'fugit'
+
 class ConfigForm
   include ActiveModel::Model
 
@@ -25,19 +27,38 @@ class ConfigForm
         Config.set!(name: attr, value: public_send(attr))
       end
 
-      Sidekiq::Cron::Job.destroy_all!
+      # Sidekiq::Cron::Job.destroy_all!
+      SolidQueue::RecurringTask.delete_all
       if Config.configured? && mode == "sender"
-        Sidekiq::Cron::Job.create(name: "Sender: Check payload ", cron: ENV.fetch("SYNCHRONIST_CHECK_PAYLOAD_CRON", "* * * * *"), class: Sender::CheckPayloadPathJob.to_s)
+        SolidQueue.schedule_recurring_task(
+          "sender_check_payload",
+          class: Sender::CheckPayloadPathJob.to_s,
+          args: [],
+          schedule: ENV.fetch("SYNCHRONIST_CHECK_PAYLOAD_CRON", "* * * * *")
+        )
+        # Sidekiq::Cron::Job.create(name: "Sender: Check payload ", cron: ENV.fetch("SYNCHRONIST_CHECK_PAYLOAD_CRON", "* * * * *"), class: Sender::CheckPayloadPathJob.to_s)
       elsif Config.configured? && mode == "receiver"
-        Sidekiq::Cron::Job.create(name: "Receiver: Generate and send payload of current storage folder", cron: receiver_send_payload_cron, class: Receiver::SendPayloadJob.to_s)
-        Sidekiq::Cron::Job.create(name: "Receiver: Check for received files and put them into storage folder", cron: ENV.fetch("SYNCHRONIST_CHECK_RECEIVED_FILES_CRON", "* * * * *"), class: Receiver::CheckReceiveFolderJob.to_s)
+        SolidQueue.schedule_recurring_task(
+          "receiver_send_payload",
+          class: Sender::CheckPayloadPathJob.to_s,
+          args: [],
+          schedule: receiver_send_payload_cron
+        )
+        # SolidQueue.schedule_recurring_task(
+        #   "receiver_check_files",
+        #   class: Receiver::CheckReceiveFolderJob.to_s,
+        #   args: [],
+        #   schedule: ENV.fetch("SYNCHRONIST_CHECK_RECEIVED_FILES_CRON", "* * * * *")
+        # )
+        # Sidekiq::Cron::Job.create(name: "Receiver: Generate and send payload of current storage folder", cron: receiver_send_payload_cron, class: Receiver::SendPayloadJob.to_s)
+        # Sidekiq::Cron::Job.create(name: "Receiver: Check for received files and put them into storage folder", cron: ENV.fetch("SYNCHRONIST_CHECK_RECEIVED_FILES_CRON", "* * * * *"), class: Receiver::CheckReceiveFolderJob.to_s)
       end
     end
     true
   end
 
   def validate_cron
-    if Fugit::Cron.parse(receiver_send_payload_cron).blank?
+    if ::Fugit::Cron.parse(receiver_send_payload_cron).blank?
       errors.add(:receiver_send_payload_cron, "Invalid cron expression")
     end
   end

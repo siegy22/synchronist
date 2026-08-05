@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require_relative "../config/environment"
+
+mode = Config.get!(:mode)
+
+if mode.blank?
+  class ConfigurationError < StandardError; end
+  raise ConfigurationError, "No mode set, cannot start watcher. Configure the mode and paths first through the UI."
+end
+
+Object.const_get("#{mode.capitalize}::Watcher").start
